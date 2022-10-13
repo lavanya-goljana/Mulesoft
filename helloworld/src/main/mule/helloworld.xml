@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="445bdea0-7946-41e1-82f1-abbf7a903b7c" >
+		<http:listener-connection host="localhost" port="8080" />
+	</http:listener-config>
+	<file:config name="File_Config" doc:name="File Config" doc:id="c039395d-8826-46d5-8048-507b0e7fde18" />
+	<http:listener-config name="HTTP_Listener_config1" doc:name="HTTP Listener config" doc:id="d77fbf44-cbc2-4636-bb51-be5b93a60877" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="helloworldFlow2" doc:id="c3057819-2335-44fe-94bd-bacc3114c0d4" >
+		<http:listener doc:name="Listener" doc:id="6be3ad57-72ff-4fef-abd0-1aa80636f764" config-ref="HTTP_Listener_config" path="/helloworld"/>
+		<logger level="INFO" doc:name="Logger" doc:id="9b138426-05b8-4cb7-b76f-22c4a8aebe31" message="main flow"/>
+		<set-payload value="am one of a kind" doc:name="Set Payload" doc:id="4a7f4729-d324-41dc-98bc-3038dd244270" />
+	</flow>
+	<flow name="helloworldFlow" doc:id="43c815e9-d7be-4fdb-8766-33006d9d8b10" >
+		<http:listener doc:name="Listener" doc:id="8f4e1757-8850-4dfb-adb8-d659d37e57ba" config-ref="HTTP_Listener_config1" path="/async"/>
+		<logger level="INFO" doc:name="Logger" doc:id="93f8fcf0-d33e-4f96-b4b8-3decdbbf743a" message="main flow"/>
+		<async doc:name="Async" doc:id="6902e0fd-e0e5-4bec-ac44-f2fb04985801" >
+			<logger level="INFO" doc:name="Logger" doc:id="c4229028-b93b-4001-b4c7-623f388ce09b" message="1"/>
+			<logger level="INFO" doc:name="Logger" doc:id="35bd1be6-93d4-4d47-a5fe-b7c1db226e34" message="2"/>
+			<logger level="INFO" doc:name="Logger" doc:id="9ef20e54-6bf8-4bdd-bd5c-d007f55543e3" message="3"/>
+			<logger level="INFO" doc:name="Logger" doc:id="6aba50f1-e8dc-48b5-a66b-6ca97adb18ff" message="4"/>
+		</async>
+	</flow>
+</mule>
